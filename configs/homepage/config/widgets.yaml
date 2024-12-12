@@ -1,0 +1,31 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/service-widgets
+
+- resources:
+      cpu: true
+      memory: true
+      disk: /media/sda
+      uptime: true
+      diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk
+
+- search:
+      provider: google
+      target: _blank
+
+- datetime:
+      text_size: xl
+      format:
+          dateStyle: short
+          timeStyle: short
+          hour12: true
+
+- openmeteo:
+      label: Seropédica
+      latitude: -22.795456
+      longitude: -43.638313
+      timezone: America/Sao_Paulo # optional
+      units: metric # or imperial
+      cache: 10
+      format:
+          maximumFractionDigits: 1

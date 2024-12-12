@@ -1,0 +1,44 @@
+services:
+  wireguard:
+    image: archef2000/pivpn:latest
+    container_name: wireguard
+    hostname: wireguard
+    ports:
+      - 51820:51820/udp
+    volumes:
+      - /var/docker/wireguard/config:/etc/wireguard
+    environment:
+      HOST: ${WIREGUARD_HOST}
+      VPN: wireguard
+      PORT: 51820
+      CLIENT_NAME: pivpn
+      NET: 10.8.0.0
+      DNS1: 1.1.1.1 # Client DNS
+      DNS2: 9.9.9.9 # Client DNS
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    restart: always
+    networks:
+      - default
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    restart: always
+    dns: 1.1.1.1
+    environment:
+      LOG_FILE: both #optional
+      FILE__TOKEN: /run/secrets/duckdns_token
+      FILE__SUBDOMAINS: /run/secrets/duckdn_subdomains
+    volumes:
+      - /var/docker/duckdns/config:/config #optional
+    network_mode: host #optional
+    secrets:
+      - duckdns_token
+      - duckdn_subdomains
+
+secrets:
+  duckdns_token:
+    file: ./secrets/duckdns_token
+  duckdn_subdomains:
+    file: ./secrets/duckdns_subdomains

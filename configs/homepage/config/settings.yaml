@@ -1,0 +1,24 @@
+---
+title: Young Robot (Server)
+theme: dark
+color: zinc
+target: _blank
+showStats: true
+statusStyle: "dot"
+useEqualHeights: true
+headerStyle: clean
+
+layout:
+  Calendar:
+    header: false
+    style: row
+    columns: 2
+  "Data & Network":
+    style: row
+    columns: 2
+  Media:
+    style: row
+    columns: 2
+  Services:
+    style: row
+    columns: 2

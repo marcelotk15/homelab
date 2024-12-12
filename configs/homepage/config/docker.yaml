@@ -1,0 +1,11 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/docker/
+
+# hass:
+#   host: hass.local
+#   port: 2375
+
+youngrobot:
+  host: homepage-dockerproxy
+  port: 2375

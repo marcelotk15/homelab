@@ -1,0 +1,6 @@
+**/*/secrets
+**/*/logs
+
+/configs/*
+!/configs/nginx
+!/configs/homepage

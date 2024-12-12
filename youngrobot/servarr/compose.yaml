@@ -1,0 +1,122 @@
+include:
+  - ../_common/networks.yaml
+
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+    volumes:
+      - /var/docker/radarr/config:/config
+      - data:/data
+    networks:
+      - default
+      - homelab
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+    volumes:
+      - /var/docker/sonarr/config:/config
+      - data:/data
+    networks:
+      - default
+      - homelab
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+    volumes:
+      - /var/docker/bazarr/config:/config
+      - data:/data
+    networks:
+      - default
+      - homelab
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+    volumes:
+      - /var/docker/prowlarr/config:/config
+    networks:
+      - default
+      - homelab
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+      WEBUI_PORT: 8080
+    ports:
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 8118:8118/tcp
+    volumes:
+      - /var/docker/qbittorrent/config:/config
+      - data:/data
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - default
+      - homelab
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+    volumes:
+      - /var/docker/jellyfin/config:/config
+      - data:/data
+    networks:
+      - default
+      - homelab
+    entrypoint: /init
+    ports:
+      - 1901:1900
+      - 7359:7359
+      - 8920:8920
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    restart: always
+    environment:
+      TZ: ${TIMEZONE}
+      PGID: ${PGID}
+      PUID: ${PUID}
+    volumes:
+      - /var/docker/jellyseerr/config:/app/config
+    networks:
+      - default
+      - homelab
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /media/external_usb/Media
+
+networks:
+  default:

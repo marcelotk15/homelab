@@ -1,0 +1,22 @@
+include:
+  - ../_common/networks.yaml
+
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TIMEZONE}
+    volumes:
+      - /var/docker/syncthing/config:/config
+      - /media/external_usb/backups:/backups
+    networks:
+      - default
+      - homelab
+    ports:
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
